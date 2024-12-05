@@ -37,8 +37,7 @@ public class Sistemadobancario {
         int operacao = input.nextInt();
 
         switch (operacao) {
-            case 1 ->
-                criarConta();
+            case 1 -> criarConta();
                 
             case 2 -> depositar();
 
@@ -85,6 +84,8 @@ public class Sistemadobancario {
 
         contasBancarias.add(novaConta);
         System.out.println("Conta criada com sucesso!");
+        System.out.println("Número da sua conta é: " + novaConta.getNumeroConta());
+        
         
         operacoes();
 
