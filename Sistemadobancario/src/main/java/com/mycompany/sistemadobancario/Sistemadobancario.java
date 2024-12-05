@@ -16,7 +16,7 @@ import java.util.Scanner;
 public class Sistemadobancario {
 
     static Scanner input = new Scanner(System.in);
-    static ArrayList<ContaMae> contasBancarias;
+    static ArrayList<ContaCorrente> contasBancarias;
 
     public static void main(String[] args) {
         contasBancarias = new ArrayList<>();
@@ -68,7 +68,7 @@ public class Sistemadobancario {
         String senha = input.next();
 
         Usuario usuario = new Usuario(nome, cpf, email, endereco, senha);
-        ContaMae novaConta = new ContaMae(usuario);
+        ContaCorrente novaConta = new ContaCorrente(usuario);
 
         contasBancarias.add(novaConta);
         System.out.println("Conta criada com sucesso!");
@@ -81,7 +81,7 @@ public class Sistemadobancario {
         System.out.print("Digite o número da conta: ");
         int numeroConta = input.nextInt();
 
-        ContaMae conta = encontrarConta(numeroConta);
+        ContaCorrente conta = encontrarConta(numeroConta);
 
         if (conta != null) {
             System.out.println("Saldo atual: R$" + conta.getTransacao().getSaldo());
@@ -97,7 +97,7 @@ public class Sistemadobancario {
             System.out.println("Nenhuma conta cadastrada.");
         } else {
             System.out.println("Lista de contas bancárias:");
-            for (ContaMae conta : contasBancarias) {
+            for (ContaCorrente conta : contasBancarias) {
                 System.out.println(conta);
             }
         }
@@ -105,8 +105,8 @@ public class Sistemadobancario {
 
     }
 
-    private static ContaMae encontrarConta(int numeroConta) {
-        for (ContaMae conta : contasBancarias) {
+    private static ContaCorrente encontrarConta(int numeroConta) {
+        for (ContaCorrente conta : contasBancarias) {
             if (conta.getNumeroConta() == numeroConta) {
                 return conta;
             }
