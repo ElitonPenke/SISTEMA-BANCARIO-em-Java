@@ -72,6 +72,9 @@ public class Sistemadobancario {
 
         contasBancarias.add(novaConta);
         System.out.println("Conta criada com sucesso!");
+        
+        operacoes();
+
     }
 
     public static void consultarSaldo() {
@@ -85,6 +88,8 @@ public class Sistemadobancario {
         } else {
             System.out.println("Conta não encontrada!");
         }
+                operacoes();
+
     }
 
     public static void listarContas() {
@@ -96,6 +101,8 @@ public class Sistemadobancario {
                 System.out.println(conta);
             }
         }
+                operacoes();
+
     }
 
     private static ContaMae encontrarConta(int numeroConta) {
@@ -106,4 +113,5 @@ public class Sistemadobancario {
         }
         return null;
     }
+
 }
