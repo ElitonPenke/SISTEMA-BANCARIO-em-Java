@@ -5,9 +5,6 @@
 package com.mycompany.sistemadobancario;
 
 
-import com.mycompany.sistemadobancario.ContaInvestimento.CRI;
-import com.mycompany.sistemadobancario.ContaInvestimento.LCA;
-import com.mycompany.sistemadobancario.ContaInvestimento.LCI;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -35,7 +32,8 @@ public class Sistemadobancario {
         System.out.println("| 5 - Consultar saldo   |");
         System.out.println("| 6 - Listar contas     |");
         System.out.println("| 7 - Investimentos     |");
-        System.out.println("| 8 - Sair              |");
+        System.out.println("| 8 - Historico         |");
+        System.out.println("| 9 - Sair              |");
         System.out.print("Digite sua escolha: ");
 
         int operacao = input.nextInt();
@@ -53,37 +51,11 @@ public class Sistemadobancario {
                 
             case 6 -> listarContas();
             
-            case 7 -> { System.out.println("1 - LCI (Letra de Crédito Imobiliário)");
-                        System.out.println("2 - LCA (Letra de Crédito do Agronegócio)");
-                        System.out.println("3 - CRI (Certificado de Recebíveis Imobiliários)");
-                        System.out.println("Escolha o tipo de investimento:");
-                        
-        int escolha = input.nextInt();
-
-        System.out.println("Informe o valor investido: ");
-        double valor = input.nextDouble();
-
-        System.out.println("Informe o tempo do investimento (em anos): ");
-        int tempo = input.nextInt();
-
-        double retorno = 0;
-
-        
-        switch (escolha) {
-            case 1 -> retorno = LCI.calcularRetorno(valor, tempo);
-            case 2 -> retorno = LCA.calcularRetorno(valor, tempo);
-            case 3 -> retorno = CRI.calcularRetorno(valor, tempo);
-            default -> {
-                System.out.println("Opção inválida.");
-                System.exit(0);
-                }
-        }
-         System.out.println("O valor investido foi: R$" + valor);
-         System.out.println("O retorno esperado é: R$" + retorno);
-           }    
-    
+            case 7 -> gerenciarInvestimentos();
+            
+            case 8 -> visualizarHistoricoTransferencias();
                 
-            case 8 -> {
+            case 9 -> {
                 System.out.println("Encerrando o sistema...");
                 System.exit(0);
             }
@@ -108,7 +80,7 @@ public class Sistemadobancario {
         String email = input.next();
 
         System.out.print("Endereço: ");
-        String endereco = input.nextLine();
+        String endereco = input.next();
 
         System.out.print("Senha: ");
         String senha = input.next();
@@ -231,5 +203,105 @@ public class Sistemadobancario {
     }
 
     
+
+
+
+
+public static void gerenciarInvestimentos() {
+    System.out.println("Número da conta: ");
+    int numeroConta = input.nextInt();
+
+    ContaCorrente conta = encontrarConta(numeroConta);
+
+    if (conta != null) {
+        System.out.println("\nEscolha uma opção:");
+        System.out.println("1 - Investir");
+        System.out.println("2 - Sacar Investimento");
+        System.out.print("Opção: ");
+
+        int opcao = input.nextInt();
+
+        switch (opcao) {
+            case 1 -> investir(conta);
+            case 2 -> sacarInvestimento(conta);
+            default -> System.out.println("Opção inválida.");
+        }
+    } else {
+        System.out.println("Conta não encontrada.");
+    }
+
+    operacoes();
+}
+
+private static void investir(ContaCorrente conta) {
+    System.out.println("\nEscolha o tipo de investimento:");
+    System.out.println("1 - LCI");
+    System.out.println("2 - LCA");
+    System.out.println("3 - CRI");
+    System.out.print("Opção: ");
+
+    int escolha = input.nextInt();
+    System.out.println("Informe o valor a investir: ");
+    double valor = input.nextDouble();
+
+    String tipoInvestimento = "";
+    double retorno = 0;
+
+    switch (escolha) {
+        case 1 -> {
+            tipoInvestimento = "LCI";
+            retorno = ContaInvestimento.LCI.calcularRetorno(valor, 1); // 1 ano
+        }
+        case 2 -> {
+            tipoInvestimento = "LCA";
+            retorno = ContaInvestimento.LCA.calcularRetorno(valor, 1); // 1 ano
+        }
+        case 3 -> {
+            tipoInvestimento = "CRI";
+            retorno = ContaInvestimento.CRI.calcularRetorno(valor, 1); // 1 ano
+        }
+        default -> {
+            System.out.println("Opção inválida.");
+            return;
+        }
+    }
+
+    conta.getTransacao().transferenciaParaInvestimento(valor, tipoInvestimento);
+    System.out.println("Investimento realizado! Retorno estimado após 1 ano: R$" + retorno);
+    
+            operacoes();
+
+}
+
+private static void sacarInvestimento(ContaCorrente conta) {
+    System.out.println("Informe o valor a sacar do investimento: ");
+    double valor = input.nextDouble();
+
+    conta.getTransacao().sacarInvestimento(valor);
+
+            operacoes();
+
+}
+
+
+public static void visualizarHistoricoTransferencias() {
+    System.out.println("Número da conta: ");
+    int numeroConta = input.nextInt();
+
+    ContaCorrente conta = encontrarConta(numeroConta);
+
+    if (conta != null) {
+        System.out.println("\nHistórico de transferências:");
+        for (String registro : conta.getTransacao().getHistoricoTransferencias()) {
+            System.out.println(registro);
+        }
+    } else {
+        System.out.println("Conta não encontrada.");
+    }
+            operacoes();
+
+}
+
+
 
 }

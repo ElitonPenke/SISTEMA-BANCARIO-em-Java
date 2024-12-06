@@ -12,7 +12,7 @@ package com.mycompany.sistemadobancario;
 
 public class ContaInvestimento {
     public class LCI {
-    private static final double TAXA = 8.0; // Taxa pré-definida para LCI (8% ao ano)
+    private static final double TAXA = 8.0; // (8% ao ano)
     
     public static double calcularRetorno(double valor, int tempo) {
         return valor * Math.pow((1 + TAXA / 100), tempo);
@@ -21,7 +21,7 @@ public class ContaInvestimento {
 
 // (Letra de Crédito do Agronegócio)
 public class LCA {
-    private static final double TAXA = 7.5; // Taxa pré-definida para LCA (7,5% ao ano)
+    private static final double TAXA = 7.5; //  (7,5% ao ano)
     
     public static double calcularRetorno(double valor, int tempo) {
         return valor * Math.pow((1 + TAXA / 100), tempo);
@@ -30,7 +30,7 @@ public class LCA {
 
 // (Certificado de Recebíveis Imobiliários)
 public class CRI {
-    private static final double TAXA = 9.0; // Taxa pré-definida para CRI (9% ao ano)
+    private static final double TAXA = 9.0; //  (9% ao ano)
     
     public static double calcularRetorno(double valor, int tempo) {
         return valor * Math.pow((1 + TAXA / 100), tempo);
